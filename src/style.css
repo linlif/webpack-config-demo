@@ -1,0 +1,6 @@
+body{
+  color: blue;
+  background: url('./img.png');
+  background-repeat: no-repeat;
+  background-position: 100px 100px;
+}
