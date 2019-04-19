@@ -16,6 +16,7 @@ module.exports = {
     chunkFilename: 'chunkJs/[name].js',
     path: path.resolve(__dirname, 'dist'),
   },
+  performance: { hints: false }, // 去掉性能警告，例如：文件大于244kb时，webpack会在控制台给出警告
   module: {
     rules: [
       // {

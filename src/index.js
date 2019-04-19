@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import './style.css'
 import './valiable.scss'
-import imgSrc from './img.png'
+import imgSrc from './images/web.jpeg'
 import router from './router'
 
 import { cube } from './math'
@@ -13,10 +13,6 @@ async function component () {
   let span = document.createElement('span')
   span.innerHTML = router
   element.appendChild(span)
-  // let img = document.createElement('img')
-  // img.src = imgSrc
-  // element.appendChild(img)
-  console.log(cube(3))
 
   let btn = document.createElement('button')
   let br = document.createElement('br')
@@ -27,6 +23,13 @@ async function component () {
   btn.innerHTML = '点我动态加载js文件'
   element.appendChild(br)
   element.appendChild(btn)
+
+  element.appendChild(br)
+  let img = document.createElement('img')
+  img.src = imgSrc
+  element.appendChild(img)
+  console.log(cube(3))
+
   return element
 }
 
