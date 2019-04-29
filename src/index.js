@@ -1,7 +1,7 @@
 import _ from 'lodash'
-import './style.css'
-import './valiable.scss'
-import imgSrc from './images/web.jpeg'
+// import './style.css'
+// import './valiable.scss'
+// import imgSrc from './images/web.jpeg'
 import router from './router'
 
 import { cube } from './math'
@@ -28,11 +28,11 @@ async function component () {
   let img = document.createElement('img')
   img.src = imgSrc
   element.appendChild(img)
-  console.log(cube(3))
+  // console.log(cube(3))
 
   return element
 }
 
-component().then(component => {
-  document.body.appendChild(component)
-})
+// component().then(component => {
+//   document.body.appendChild(component)
+// })

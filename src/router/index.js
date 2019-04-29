@@ -8,9 +8,9 @@
 
 function importAll (r) {
   var cache = {}
-  console.log(r.keys())
+  // console.log(r.keys())
   r.keys().forEach(key => cache[key] = r(key).default)
-  console.log('cache', cache)
+  // console.log('cache', cache)
   return cache
 }
 

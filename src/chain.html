@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>chain</title>
+</head>
+
+<body>
+  <div>chain</div>
+  <script>
+    // var o = {}
+    // var a = []
+    // console.log(o.__proto__)
+    // console.log(a.__proto__)
+
+    // console.log(o.__proto__.constructor === Object)
+    // console.log(a.__proto__.constructor === Array)
+
+    // === 借助构造函数实现继承，缺点：无法继承原型链上的属性和方法 ===
+    function Person() {
+      this.name = 'person1'
+    }
+    Person.prototype.sex = '10'
+    Person.prototype.sayName = function () {
+      alert(this.name)
+    }
+    function Man() {
+      Person.call(this)
+      this.age = '24'
+    }
+    var m1 = new Man()
+    console.log(m1) // Man {name: "person1", age: "24"}  (注意：实例自身不存在sex属性和sayName方法)
+    // m1.sayName() // 报错 （因为原型链上也不存在）
+
+    // === 借助原型链实现继承，缺点：子类共享父类的引用属性 ===
+    function Father() {
+      this.Farr = [1, 2, 3]
+    }
+    function Child() { }
+    Child.prototype = new Father()
+    var c1 = new Child()
+    var c2 = new Child()
+    console.log(c1.Farr) // [1, 2, 3]
+    console.log(c2.Farr) // [1, 2, 3]
+    c1.Farr.push(4)
+    console.log(c1.Farr) // [1, 2, 3, 4]
+    console.log(c2.Farr) // [1, 2, 3, 4]
+
+    // === 组合继承，优点：子类不会共享父类中的属性，缺点：Mother构造函数被执行两次，无法确定实例直接父类了 ===
+    function Mother() {
+      console.log('init Mother...')
+      this.Marr = ['a', 'b', 'c']
+    }
+    function Daughter() {
+      Mother.call(this) // 执行一次Mother构造函数
+    }
+    Daughter.prototype = new Mother() // 再执行一次Mother构造函数
+    var d1 = new Daughter()
+    var d2 = new Daughter()
+    console.log(d1.Marr) //  ["a", "b", "c"]
+    console.log(d2.Marr) //  ["a", "b", "c"]
+    d1.Marr.push('d')
+    console.log(d1.Marr) // ["a", "b", "c", "d"]
+    console.log(d2.Marr) //  ["a", "b", "c"]
+    console.log(d2.__proto__.constructor === Mother) // true（期望值是false，因为Daughter才是d2的直接父类）
+
+    // === 组合继承优化1，优点：防止调用两次构造函数，缺点：依旧无法确定实例直接父类 ===
+    function Animal() {
+      console.log('init Animal...')
+    }
+    function Cat() {
+      Animal.call(this) // 执行一次Animal构造函数
+    }
+    Cat.prototype = Animal.prototype
+    var cat = new Cat()
+    console.log(cat.__proto__.constructor === Animal) // true（期望值是false，因为Cat才是cat的直接父类）
+
+    // === 组合继承的终极优化，解决无法确定实例直接父类问题 ===
+    function God() {
+      console.log('init Final...')
+      this.name = 'god'
+    }
+    God.prototype.todo = function () {
+      alert('todo')
+    }
+    function Son() {
+      God.call(this)
+    }
+    // Son.prototype = God.prototype
+    Son.prototype = Object.create(God.prototype) // Object.create()方法创建一个新对象，使用现有的对象来提供新创建的对象的__proto__
+    console.log(God.prototype)
+    console.log(Object.create(God.prototype))
+    Son.prototype.constructor = Son
+    var s = new Son // 无参数时，小括号可以省略
+    console.log(s)
+    console.log(s.__proto__.constructor === Son) // true (与期望值一直，完美！)
+    console.log(s.__proto__.constructor) // true (与期望值一直，完美！)
+
+    console.log({})
+    console.log(Object.create(null))
+
+    // 为啥要用Object.create()方法?
+    // 请查阅： https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/create
+    for (item in Son.prototype) {
+      console.log('item', item)
+    }
+    for (item in Object.create(God.prototype)) {
+      console.log('item', item)
+    }
+
+  </script>
+</body>
+
+</html>
