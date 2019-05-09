@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Ajax</title>
+</head>
+
+<body>
+  <div>open console , press F12 !</div>
+  <script>
+    // === Ajax最简单实现 ===
+    function Ajax(method, url) {
+      var xhr
+      if (XMLHttpRequest) {
+        xhr = new XMLHttpRequest()
+      } else if (ActiveXObject) {
+        // IE6及其以下版本
+        xhr = new ActiveXObjcet('Microsoft.XMLHTTP');
+        alert('请升级浏览器')
+      }
+
+      xhr.onreadystatechange = function (res) {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200 || xhr.status === 201) {
+            conosle.log(res)
+          }
+        }
+      }
+      xhr.open(method, url, false)
+      xhr.send(null)
+    }
+    Ajax('GET', 'https://www.jianshu.com/notes/42755212/rewards?count=20') // 会报跨域错误，因为这是在网上随便找的链接
+  </script>
+
+
+  <script type="text/javascript">
+    // === JSONP实现 ====
+    // 全局定义jsonp的函数名
+    // 服务端返回的格式：cb(result: [{ a: 1, b: 2 }])
+    // 这样就可以获得callback的参数result
+    window.cb = function (result) {
+      console.log(result)
+    }
+  </script>
+  <!-- 开始发送JSONP-->
+  <script src="http://suggest.taobao.com/sug?code=utf-8&q=毛巾&callback=cb"></script>
+
+</body>
+
+</html>
