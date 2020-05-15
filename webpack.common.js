@@ -98,7 +98,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: '管理输出'
+      title: 'webpack config demo'
     }),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({

@@ -12,12 +12,14 @@ module.exports = merge(common, {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new HtmlWebpackPlugin(), // Generates default index.html
-    // new HtmlWebpackPlugin({  // Also generate a test.html
+    new HtmlWebpackPlugin({  // Generates default index.html
+      template:'src/index.html'
+    }),
+    // new HtmlWebpackPlugin({  // Also generate a this.html
     //   filename: 'this.html',
     //   template: 'src/this.html'
     // }),
-    // new HtmlWebpackPlugin({  // Also generate a test.html
+    // new HtmlWebpackPlugin({  // Also generate a chain.html
     //   filename: 'chain.html',
     //   template: 'src/chain.html'
     // })

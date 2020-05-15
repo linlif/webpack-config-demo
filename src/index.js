@@ -1,38 +1,8 @@
-import _ from 'lodash'
-// import './style.css'
-// import './valiable.scss'
-// import imgSrc from './images/web.jpeg'
-import router from './router'
 
-import { cube } from './math'
+// 静态引入
+// import lodash from 'lodash'
+// 动态引入
+// import(/*webpackChunkName:"jquery"*/ 'jquery')
 
-async function component () {
-  let element = document.createElement('div')
-  const { default: _ } = await import(/*webpackChunkName:"lodash"*/ 'lodash')
-  element.innerHTML = _.join(['hello webpack!', `3 cube equals ${cube(3)}`], ' :')
-  let span = document.createElement('span')
-  span.innerHTML = router
-  element.appendChild(span)
-
-  let btn = document.createElement('button')
-  let br = document.createElement('br')
-  btn.onclick = e => import(/*webpackChunkName:"print"*/ './print').then(module => {
-    let print = module.default
-    print()
-  })
-  btn.innerHTML = '点我动态加载js文件'
-  element.appendChild(br)
-  element.appendChild(btn)
-
-  element.appendChild(br)
-  let img = document.createElement('img')
-  img.src = imgSrc
-  element.appendChild(img)
-  // console.log(cube(3))
-
-  return element
-}
-
-// component().then(component => {
-//   document.body.appendChild(component)
-// })
+import b from './b.js'
+import(/*webpackChunkName:"a"*/ './a.js')
