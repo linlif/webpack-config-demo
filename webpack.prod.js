@@ -16,7 +16,7 @@ module.exports = merge(common, {
       maxSize: 0, // 单个模块大小超过这个值（且大于minSize）时，将进行代码分割，优先级 minSize > maxSize > (maxInitialRequests/maxAsyncRequests)，0表示不尝试对超大体积的模块进行分割，如果设定一个值（例如50000），那么当单个模块超出这个值时，就会尝试对这个模块分割，且忽略maxInitialRequests/maxAsyncRequests这个两个参数的限制。
       minChunks: 1, // 引用次数超过这个值时，才进行代码分割
       maxAsyncRequests: 5, // 最大同步请求数，这个参数限制代码分割的数量，因为浏览器单次可同时可以发出的请求是有限制的（chrome是6个请求），这个参数使用默认的就好，不建议更改
-      maxInitialRequests: 3, // 入口文件最多同时发出的请求数，这个限制入口页的请求数，3表示页面刚刚进来时，只请求3个js文件，即入口页面的代码分割不会超过3个（即使单个文件可能很大）
+      maxInitialRequests: 2, // 入口文件最多同时发出的请求数，这个限制入口页的请求数，3表示页面刚刚进来时，只请求3个js文件，即入口页面的代码分割不会超过3个（即使单个文件可能很大）
       automaticNameDelimiter: '~', // chunk名（vender）和原始名之间的连接符，例如：vender~index.js、vender~index2.js 中间的~号，就是通过这个参数来配置的
       name: true, // 可选值： boolean: true | function (module, chunks, cacheGroupKey) | string ，用户指定分割模块的名字，设置为true表示根据chunks和cacheGroup key自动生成
       cacheGroups: { // 缓存组，做代码分割时，会把一个模块在所有地方的引入情况做统计，最后形成一个引用图，这样才可以做到代码分割的优化（知道引用次数，知道是否被引用过，避免重复打包），这个组中，自动继承且可以覆盖 splitChunks.* 的配置，它还有自己的配置（test, priority，reuseExistingChunk，default）
